@@ -1,10 +1,11 @@
 package ru.vsu.sc.uliyanov_n_s;
 
-import java.io.PrintStream;
-import java.util.Locale;
 import ru.vsu.sc.uliyanov_n_s.utils.ArrayUtils;
 
-public class Main {
+import java.io.PrintStream;
+
+public class ConsoleMain {
+
     public static class CmdParams {
         public String inputFile;
         public String outputFile;
@@ -14,8 +15,8 @@ public class Main {
         public boolean window;
     }
 
-    public static CmdParams parseArgs(String[] args) {
-        CmdParams params = new CmdParams();
+    public static ConsoleMain.CmdParams parseArgs(String[] args) {
+        ConsoleMain.CmdParams params = new CmdParams();
         if (args.length > 0) {
             if (args[0].equals("--help")) {
                 params.help = true;
@@ -47,18 +48,8 @@ public class Main {
         return params;
     }
 
-    public static void winMain() throws Exception {
-        Locale.setDefault(Locale.ROOT);
-
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FrameMain().setVisible(true);
-            }
-        });
-    }
-
     public static void main(String[] args) throws Exception {
-        CmdParams params = parseArgs(args);
+        ConsoleMain.CmdParams params = parseArgs(args);
         ArrayTransform arrayTransform = new ArrayTransform();
         if (params.help) {
             PrintStream out = params.error ? System.err : System.out;
@@ -71,7 +62,7 @@ public class Main {
         }
 
         if (params.window) {
-            winMain();
+            GuiMain.winMain();
         } else {
             int[][] arr = ArrayUtils.readIntArray2FromFile(params.inputFile);
             if (arr == null) {
